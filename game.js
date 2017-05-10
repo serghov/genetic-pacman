@@ -3,9 +3,9 @@ class Game {
 
 		this.ghosts = [
 			{x: 1, y: 2, direction: 0, img: document.getElementById('ghost0')},
-			{x: 1, y: 4, direction: 0, img: document.getElementById('ghost1')},
-			{x: 1, y: 6, direction: 0, img: document.getElementById('ghost2')},
-			{x: 1, y: 8, direction: 0, img: document.getElementById('ghost3')},
+			{x: 4, y: 9, direction: 0, img: document.getElementById('ghost1')},
+			{x: 9, y: 4, direction: 0, img: document.getElementById('ghost2')},
+			{x: 18, y: 18, direction: 0, img: document.getElementById('ghost3')},
 		];
 
 		this.pacman = {x: 1, y: 1, direction: 0, img: document.getElementById('pacman'), score: 0, moves: 1};
