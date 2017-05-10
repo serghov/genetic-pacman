@@ -1,5 +1,5 @@
 class Game {
-	constructor(canvas = document.createElement('canvas'), moveDelay = 200) {
+	constructor(canvas = document.createElement('canvas'), moveDelay = 200, genome = [-5, -2, 1, 2, 0]) {
 
 		this.ghosts = [
 			{x: 1, y: 2, direction: 0, img: document.getElementById('ghost0')},
@@ -31,7 +31,7 @@ class Game {
 		this.renderer.update(movePacman.bind(this), ['motion'], moveDelay);
 
 
-		this.genome = [-10, -5, 2, 5, 0];
+		this.genome = genome;
 
 	}
 
@@ -41,6 +41,10 @@ class Game {
 
 	stop() {
 		this.renderer.pause();
+	}
+
+	get isDone() {
+		return this.pacman.moves > 600 || !this.renderer.isRunning;
 	}
 
 }

@@ -17,7 +17,7 @@ const moveGhost = (ghost, game) => {
 
 	if (ghost.x === game.pacman.x && ghost.y === game.pacman.y) {
 		game.stop();
-		console.log(`lost score: ${game.Score}`);
+		game.pacman.score = -5000;
 	}
 };
 
