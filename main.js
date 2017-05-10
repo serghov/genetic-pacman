@@ -101,7 +101,7 @@ const mutate = (a) => {
 	const res = [];
 	for (let i in a) {
 		if (Math.random() < mutationRate)
-			res.push(a[i] + Math.random());
+			res.push(a[i] + Math.random() - 0.5);
 		else
 			res.push(a[i]);
 	}
