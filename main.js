@@ -8,17 +8,23 @@ const mutationRate = 0.3;
 
 const lossValues = [];
 
+let bestPlayer = {s: -1000};
+
 document.addEventListener("DOMContentLoaded", (event) => {
 	canvas = document.getElementById('canvas');
 	initRandomGenomes();
 	makeGames();
 	requestAnimationFrame(checkGames);
+
+	document.getElementById('btn').addEventListener('click', () => {
+		const game = new Game(document.getElementById('bestCanvas'), 100, bestPlayer.g);
+	});
 });
 
 const removeCanvases = () => {
 	const container = document.getElementById('canvases');
 
-	while(container.firstChild){
+	while (container.firstChild) {
 		//document.body.removeChild(gameCanvases[0]);
 		container.removeChild(container.firstChild);
 	}
@@ -54,6 +60,10 @@ const checkGames = () => {
 		});
 		console.log(scores[0]);
 		lossValues.push(scores[0].s);
+
+		if (scores[0].s > bestPlayer.s) {
+			bestPlayer = JSON.parse(JSON.stringify(scores[0]));
+		}
 
 		populate(scores[0].g, scores[1].g);
 		removeCanvases();
