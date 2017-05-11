@@ -33,14 +33,22 @@ class Game {
 
 		this.genome = genome;
 
+		this.moves = new Set();
+		this.repeatedMoves = 0;
 	}
 
 	get Score() {
-		return this.pacman.score / this.pacman.moves;
+		//return (this.pacman.score /*- this.repeatedMoves*/) / this.pacman.moves;
+		return this.pacman.score * 2 + this.moves.size
 	}
 
 	stop() {
 		this.renderer.pause();
+
+		const ctx = this.renderer.context;
+		ctx.globalAlpha = 0.2;
+		ctx.fillStyle = "rgba(180, 0, 0, 0.5)";
+		ctx.fillRect(0, 0, this.renderer.width, this.renderer.height);
 	}
 
 	get isDone() {

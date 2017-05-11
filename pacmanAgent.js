@@ -23,7 +23,14 @@ function movePacman(now, renderer) {
 			best_choice = i;
 		}
 	}
+
 	let curDir = dirToVec(best_choice);
+	const cDirV = directions[this.pacman.direction];
+
+	if (this.pacman.direction != best_choice && sur[cDirV.y][cDirV.x] == 0) {
+		this.pacman.score -= 1;
+	}
+	this.pacman.direction = best_choice;
 
 	pacman.x += curDir.x;
 	pacman.y += curDir.y;
@@ -41,6 +48,13 @@ function movePacman(now, renderer) {
 		this.pacman.score = -10000;
 	}
 
+	const curPos = pacman.y * this.mazeWidth + pacman.x;
+	if (this.moves.has(curPos)) {
+		this.repeatedMoves++;
+	}
+	else {
+		this.moves.add(curPos);
+	}
 
 
 }
