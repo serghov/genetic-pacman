@@ -14,7 +14,14 @@ function movePacman(now, renderer) {
 	const ml_choices = [0, 0, 0, 0];
 
 	for (let i in directions) {
-		ml_choices[i] = ml_direction(get_ml_data(sur[directions[i].y][directions[i].x], 1 * (i == this.pacman.direction)), this.genome);
+		const dirOffset = dirToVec(i);
+		const mazePos = (pacman.y + dirOffset.y) * this.mazeWidth + pacman.x + dirOffset.x;
+
+		ml_choices[i] = ml_direction(get_ml_data(
+			sur[directions[i].y][directions[i].x],
+			1 * (i == this.pacman.direction),
+			1 * (this.moves.has(mazePos))
+		), this.genome);
 	}
 
 	let best_choice = 0;
@@ -51,7 +58,7 @@ function movePacman(now, renderer) {
 	/**
 	 * if we hit a ghost, we lose
 	 */
-	for (let i in this.ghosts){
+	for (let i in this.ghosts) {
 		const ghost = this.ghosts[i];
 		if (ghost.x === pacman.x && ghost.y === pacman.y) {
 			this.stop();
@@ -66,7 +73,6 @@ function movePacman(now, renderer) {
 	else {
 		this.moves.add(curPos);
 	}
-
 
 
 }
@@ -90,11 +96,12 @@ function ml_direction(data, genome) {
  * [2] - food or not
  * [3] - random number
  * [4] - weather or not we were moving in this direction before
+ * [5] - if we have been to this cell before
  * @param point
  * @return {[number,number,number]}
  */
-function get_ml_data(point, isDirection) {
-	const res = [0, 0, 0, 0, 0];
+function get_ml_data(point, isDirection, haveBeen) {
+	const res = [0, 0, 0, 0, 0, 0];
 	switch (point) {
 		case 1:
 		case 2:
@@ -106,6 +113,7 @@ function get_ml_data(point, isDirection) {
 	}
 	res[3] = Math.random();
 	res[4] = isDirection;
+	res[5] = haveBeen;
 
 	return res;
 }

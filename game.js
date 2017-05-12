@@ -1,5 +1,5 @@
 class Game {
-	constructor(canvas = document.createElement('canvas'), moveDelay = 200, genome = [-5, -2, 1, 2, 0]) {
+	constructor(canvas = document.createElement('canvas'), moveDelay = 200, genome = [-5, -2, 1, 2, 0, 0]) {
 
 		this.ghosts = [
 			{x: 15, y: 2, direction: 0, img: document.getElementById('ghost0')},
@@ -21,7 +21,6 @@ class Game {
 
 		this.cellWidth = canvas.width / this.maze.length;
 		this.cellHeight = canvas.height / this.maze[0].length;
-
 
 
 		this.renderer.update(moveGhosts.bind(this), ['motion'], moveDelay);
