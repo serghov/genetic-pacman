@@ -48,6 +48,17 @@ function movePacman(now, renderer) {
 		this.pacman.score = -10000;
 	}
 
+	/**
+	 * if we hit a ghost, we lose
+	 */
+	for (let i in this.ghosts){
+		const ghost = this.ghosts[i];
+		if (ghost.x === pacman.x && ghost.y === pacman.y) {
+			this.stop();
+			this.pacman.score -= 20;
+		}
+	}
+
 	const curPos = pacman.y * this.mazeWidth + pacman.x;
 	if (this.moves.has(curPos)) {
 		this.repeatedMoves++;
@@ -55,6 +66,7 @@ function movePacman(now, renderer) {
 	else {
 		this.moves.add(curPos);
 	}
+
 
 
 }

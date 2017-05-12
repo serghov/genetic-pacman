@@ -64,4 +64,11 @@ class Renderer {
 
 		requestAnimationFrame(this._update.bind(this));
 	}
+
+	destroy() {
+		this.isRunning = false;
+		this.context = null;
+		this.canvas = null;
+		this._updateFunctions = null;
+	}
 }

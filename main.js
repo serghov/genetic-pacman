@@ -10,6 +10,8 @@ const lossValues = [];
 
 let bestPlayer = {s: -1000};
 
+let bestPlayerGame = null;
+
 document.addEventListener("DOMContentLoaded", (event) => {
 	canvas = document.getElementById('canvas');
 	initRandomGenomes();
@@ -17,7 +19,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	requestAnimationFrame(checkGames);
 
 	document.getElementById('btn').addEventListener('click', () => {
-		const game = new Game(document.getElementById('bestCanvas'), 100, bestPlayer.g);
+		if (bestPlayerGame) {
+			bestPlayerGame.destroy();
+		}
+		bestPlayerGame = new Game(document.getElementById('bestCanvas'), 100, bestPlayer.g);
 	});
 });
 
@@ -65,7 +70,7 @@ const checkGames = () => {
 			bestPlayer = JSON.parse(JSON.stringify(scores[0]));
 		}
 
-		populate(scores[0].g, scores[1].g);
+		populate(JSON.parse(JSON.stringify(scores[0].g)), JSON.parse(JSON.stringify(scores[1].g)));
 		removeCanvases();
 		games = [];
 		makeGames();
@@ -92,7 +97,11 @@ const populate = (a, b) => {
 			initialChild.push(b[i]);
 		}
 	}
+	genomes[0] = a;
+	genomes[1] = b;
 	for (let i in genomes) {
+		if (i < 2)
+			continue;
 		genomes[i] = mutate(initialChild);
 	}
 };
@@ -101,7 +110,7 @@ const mutate = (a) => {
 	const res = [];
 	for (let i in a) {
 		if (Math.random() < mutationRate)
-			res.push(a[i] + Math.random() - 0.5);
+			res.push(a[i] + (Math.random() - 0.5));
 		else
 			res.push(a[i]);
 	}

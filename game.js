@@ -2,7 +2,7 @@ class Game {
 	constructor(canvas = document.createElement('canvas'), moveDelay = 200, genome = [-5, -2, 1, 2, 0]) {
 
 		this.ghosts = [
-			{x: 1, y: 2, direction: 0, img: document.getElementById('ghost0')},
+			{x: 15, y: 2, direction: 0, img: document.getElementById('ghost0')},
 			{x: 4, y: 9, direction: 0, img: document.getElementById('ghost1')},
 			{x: 9, y: 4, direction: 0, img: document.getElementById('ghost2')},
 			{x: 18, y: 18, direction: 0, img: document.getElementById('ghost3')},
@@ -22,14 +22,15 @@ class Game {
 		this.cellWidth = canvas.width / this.maze.length;
 		this.cellHeight = canvas.height / this.maze[0].length;
 
-		this.renderer.update(drawBackground.bind(this), ['draw']);
-		this.renderer.update(drawMaze.bind(this), ['draw']);
-		this.renderer.update(drawGhosts.bind(this), ['draw']);
-		this.renderer.update(drawPacman.bind(this), ['draw']);
+
 
 		this.renderer.update(moveGhosts.bind(this), ['motion'], moveDelay);
 		this.renderer.update(movePacman.bind(this), ['motion'], moveDelay);
 
+		this.renderer.update(drawBackground.bind(this), ['draw']);
+		this.renderer.update(drawMaze.bind(this), ['draw']);
+		this.renderer.update(drawGhosts.bind(this), ['draw']);
+		this.renderer.update(drawPacman.bind(this), ['draw']);
 
 		this.genome = genome;
 
@@ -47,8 +48,16 @@ class Game {
 
 		const ctx = this.renderer.context;
 		ctx.globalAlpha = 0.2;
-		ctx.fillStyle = "rgba(180, 0, 0, 0.5)";
+		ctx.fillStyle = "rgba(180, 0, 0, 1)";
 		ctx.fillRect(0, 0, this.renderer.width, this.renderer.height);
+		ctx.globalAlpha = 1;
+	}
+
+	destroy() {
+		this.stop();
+		this.renderer.destroy();
+		this.renderer = null;
+		delete this.renderer;
 	}
 
 	get isDone() {

@@ -17,9 +17,7 @@ const moveGhost = (ghost, game) => {
 
 	if (ghost.x === game.pacman.x && ghost.y === game.pacman.y) {
 		game.stop();
-
 		game.pacman.score -= 20;
-
 	}
 };
 
