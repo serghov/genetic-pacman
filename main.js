@@ -163,7 +163,11 @@ const dataTable = [
 const options = {
 	title: 'Best Score of players',
 	curveType: 'function',
-	legend: {position: 'bottom'}
+	legend: {position: 'bottom'},
+	animation:{
+		duration: 1000,
+		easing: 'out'
+	},
 };
 
 let data = null;
